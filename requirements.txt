@@ -1,0 +1,12 @@
+polars
+pandas
+numpy
+scikit-learn
+xgboost
+lightgbm
+matplotlib
+seaborn
+ipykernel
+pyarrow
+xlsx2csv
+mlflow

@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# virtual env
+.venv
+venv
+
+# environment config
+.env
+
+# Big data sets
+data/raw/*
+data/processed/*
