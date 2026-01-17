@@ -113,6 +113,7 @@ def train_model(df: pl.DataFrame):
     
     # 8. Save Model
     joblib.dump(model, MODEL_DIR / "xgboost_model.pkl")
+    joblib.dump(encoder, MODEL_DIR / "encoder.pkl")
     print(f"Model Saved to {MODEL_DIR / 'xgboost_model.pkl'}")
     
 def plot_importance(model, feature_names):
