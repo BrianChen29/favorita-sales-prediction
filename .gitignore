@@ -1,13 +1,16 @@
-# macOS
-.DS_Store
-
-# virtual env
-.venv
-venv
-
-# environment config
+# Python & Venv
+__pycache__/
+*.pyc
+.venv/
 .env
 
-# Big data sets
-data/raw/*
-data/processed/*
+# Data & Models
+data/
+
+# IDE
+.DS_Store
+.vscode/
+
+# Docker
+.dockerignore
+
