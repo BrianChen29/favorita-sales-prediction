@@ -13,7 +13,7 @@ This project demonstrates a shift from traditional analysis to **Machine Learnin
 * **Key Challenge**: Handling complex seasonality, local/national holidays, and exogenous shocks (2016 Earthquake).
 
 ## Datasets
-![Kaggle](https://www.kaggle.com/competitions/store-sales-time-series-forecasting/data)
+[Kaggle: Store Sales - Time Series Forecasting](https://www.kaggle.com/competitions/store-sales-time-series-forecasting/data)
 
 ## Tech Stack & Engineering Decisions
 
