@@ -1,10 +1,15 @@
 # favorita-sales-prediction
-## Store Sales Forecasting: End-to-End MLE Pipeline
-Personal ML side project
+## Favorita Store Sales Forecasting: End-to-End MLE Pipeline
+
+![Python](https://img.shields.io/badge/Python-3.9-blue?logo=python)
+![Polars](https://img.shields.io/badge/Polars-Fast_ETL-orange)
+![XGBoost](https://img.shields.io/badge/XGBoost-Gradient_Boosting-green)
+![FastAPI](https://img.shields.io/badge/FastAPI-Serving-009688?logo=fastapi)
+![Docker](https://img.shields.io/badge/Docker-Ready-blue?logo=docker)
 
 A production-ready Machine Learning pipeline to forecast daily sales for thousands of product families at Favorita stores in Ecuador.
 
-This project demonstrates a shift from traditional analysis to **Machine Learning Engineering (MLE)** practices, focusing on modular code, high-performance data processing (Polars), and reproducible environments (Docker).
+This project demonstrates a shift from traditional analysis to **Machine Learning Engineering (MLE)** practices, focusing on modular code, high-performance data processing (Polars), and reproducible API deployment (Docker + FastAPI).
 
 ## Project Overview
 
@@ -23,35 +28,35 @@ This project demonstrates a shift from traditional analysis to **Machine Learnin
     * **Lag-16 Strategy**: Designed features strictly based on the 16-day forecast horizon to prevent data leakage.
     * **Context-Aware Holidays**: logic to map holidays strictly to their specific cities/states.
     * **Rolling Statistics**: Rolling mean/std over 30/60 days to capture long-term trends.
-* **MLOps**:
-    * Modular Python scripts (not just Notebooks).
-    * Artifact serialization (Model + Encoder).
-    * Dockerized inference pipeline.
+* **MLOps & Deployment**:
+    * **FastAPI**: Serving predictions via a high-performance REST API.
+    * **Docker**: Containerized environment ensuring reproducibility from local dev to cloud (AWS Lambda ready).
+    * **Artifact Serialization**: Managed model/encoder lifecycle using `joblib`.
 
 ## Feature Importance
 
 The model identifies **long-term trends (Rolling Means)** and **short-term history (Lags)** as the strongest predictors, aligning with retail business intuition.
+
 ![Feature Importance](models/feature_importance.png)
 
-## Project Structure
+## 📂 Project Structure
 
 ```bash
 .
-├── data/               # Raw data (gitignored)
 ├── models/             # Trained artifacts (model.pkl, encoder.pkl)
-├── outputs/            # Processed parquet & submission.csv
 ├── src/                # (Optional) Helper modules
+├── app.py              # FastAPI Application (Entry Point)
 ├── 01_preprocessing.py # ETL: Cleaning & Merging (Polars)
 ├── 02_feature_engineering.py # Lags, Rolling, Holiday Logic
 ├── 03_training.py      # XGBoost Training & Validation
 ├── 04_inference.py     # Batch Inference Script
-├── Dockerfile          # Reproducible Environment
+├── Dockerfile          # Reproducible Environment (API Server)
 └── requirements.txt
 ```
 
 ## How to Run
 
-### Method 1: Local Environment
+### Method 1: Local Training Pipeline (Reproduce Model)
 
 ```bash
 # 1. Install dependencies
@@ -64,16 +69,28 @@ python 03_training.py
 python 04_inference.py
 ```
 
-### Method 2: Docker (Recommended)
-Build and run the containerized inference pipeline.
+### Method 2: Dockerized API (Inference Demo)
+Build and run the containerized REST API server.
 
 ```bash
-# Build image
-docker build -t favorita-app .
+# Build the Docker Image
+docker build -t favorita-api .
 
-# Run inference (Mounting outputs to host)
-docker run -v $(pwd)/outputs:/app/outputs favorita-app
+# Run the Container
+# Maps host port 8080 to container port 8080
+docker run -p 8080:8080 favorita-api
 ```
+
+### Access the API
+
+Once the container is running, access the Interactive Swagger UI to make predictions:
+
+**👉 http://localhost:8080/docs**
+
+1. Click on ```POST /predict```
+2. Click **Try it out**
+3. Enter feature values (ensure lags/rolling means are not 0)
+4. Click **Execute** to see the sales forecast.
 
 ## Results
 
