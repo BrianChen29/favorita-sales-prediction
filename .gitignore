@@ -1,6 +1,7 @@
 # Python & Venv
 __pycache__/
 *.pyc
+**/venv/
 .venv/
 .env
 
@@ -14,3 +15,6 @@ data/
 # Docker
 .dockerignore
 
+# mlruns
+mlruns/
+**/mlruns/
